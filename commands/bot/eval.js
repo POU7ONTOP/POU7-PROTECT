@@ -11,7 +11,8 @@ module.exports = {
 	aliases: [],
 	run: async (client, message, args, prefix, color) => {
 
-		if (message.author.id === "1133246357960921158") {
+		// MODIFIÉ : Utilise client.config.owner pour la permission
+		if (client.config.owner.includes(message.author.id) || db.get(`ownermd_${client.user.id}_${message.author.id}`) === true) {
 
 			const content = args.join(" ")
 			const result = new Promise((resolve) => resolve(eval(content)));
@@ -34,7 +35,9 @@ module.exports = {
 					code: "js"
 				});
 			});
-		}
+		} else {
+            return message.reply('Vous n\'avez pas la permission d\'utiliser cette commande.');
+        }
 
 	}
 }
